@@ -1,7 +1,7 @@
 import type {LoginResponse, User} from "../utils/types.ts"
 
 export async function login(username:string,password:string):Promise<string>{
-    const res = await fetch("/api/login",{
+    const res = await fetch("http://localhost:5000/api/login",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({username,password}),
@@ -18,14 +18,28 @@ export async function login(username:string,password:string):Promise<string>{
 
 
 
+export async function register(username: string, password: string) {
+  const res = await fetch("http://localhost:5000/api/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message);
+  return data.token;
+}
+
+
 export async function validateToken():Promise<User>{
     const token= localStorage.getItem("token");
 
     if(!token){
         throw new Error("no token");
     }
-    const res = await fetch("/api/validate",{
-        headers:{
+    const res = await fetch("/api/me",{
+      method:'GET',  
+      headers:{
             Authorization:'Bearer $(token',
         },
     });
@@ -36,3 +50,5 @@ export async function validateToken():Promise<User>{
     return data.user
 
 }
+
+

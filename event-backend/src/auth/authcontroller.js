@@ -30,3 +30,31 @@ exports.login = async (req, res) => {
 
   return res.json({ token });
 };
+
+
+exports.register = async (req, res) => {
+  const { username, password } = req.body;
+
+  // vérifier si user existe
+  const existing = await pool.query(
+    "SELECT id FROM users WHERE username=$1",
+    [username]
+  );
+
+  if (existing.rows.length > 0) {
+    return res.status(409).json({ message: "Username déjà utilisé" });
+  }
+
+  // hash password
+  const hash = await bcrypt.hash(password, 10);
+
+  // insert
+  await pool.query(
+    "INSERT INTO users (username, password) VALUES ($1, $2)",
+    [username, hash]
+  );
+
+  // connecter direct
+  const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "1h" });
+  return res.status(201).json({ token });
+};

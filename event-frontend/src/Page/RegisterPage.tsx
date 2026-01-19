@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { login } from "../API/auth-actions";
+import { useNavigate } from "react-router-dom";
+import { register } from "../API/auth-actions";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const token = await login(username, password);
+    const token = await register(username, password);
     localStorage.setItem("token", token);
     navigate("/events");
   }
@@ -18,19 +18,7 @@ export default function LoginPage() {
     <form onSubmit={handleSubmit}>
       <input value={username} onChange={(e) => setUsername(e.target.value)} />
       <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button type="submit">Se connecter</button>
-
-      <p>
-        Pas de compte ? <Link to="/register">Créer un compte</Link>
-      </p>
+      <button type="submit">Créer un compte</button>
     </form>
   );
 }
-
-
-
-
-
-
-
-

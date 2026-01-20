@@ -14,6 +14,7 @@ export default function LoginPage() {
     navigate("/events");
   }
 
+  
   return (
     <form onSubmit={handleSubmit}>
       <input value={username} onChange={(e) => setUsername(e.target.value)} />

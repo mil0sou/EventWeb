@@ -14,7 +14,7 @@ export default function EventsPage() {
   return (
     <div style={{ padding: 20 }}>
       <h2>PAGE EVENTS</h2>
-      <p>Connecté en tant que :<b>{username}</b></p>
+      <p>Connecté en tant que : <b>{username}</b></p>
 
       <button onClick={logout}>Se déconnecter</button>
     </div>

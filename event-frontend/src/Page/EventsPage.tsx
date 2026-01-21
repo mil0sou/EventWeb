@@ -12,6 +12,15 @@ export default function EventsPage() {
     navigate("/login");
   }
   return (
+    /*
+
+
+    
+
+
+    */
+
+
     <div style={{ padding: 20 }}>
       <h2>PAGE EVENTS</h2>
       <p>Connecté en tant que : <b>{username}</b></p>

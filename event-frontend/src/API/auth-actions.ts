@@ -37,10 +37,10 @@ export async function validateToken():Promise<User>{
     if(!token){
         throw new Error("no token");
     }
-    const res = await fetch("/api/me",{
+    const res = await fetch("http://localhost:5000/api/me",{
       method:'GET',  
       headers:{
-            Authorization:'Bearer $(token',
+            Authorization:`Bearer ${token}`,
         },
     });
     if (!res.ok){

@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { useEffect, useState, type ReactNode } from "react";
 import LoginPage from "./Page/LoginPage";
 import RegisterPage from "./Page/RegisterPage"; // si tu l'as
 // import EventsPage from "./Page/EventsPage";
@@ -9,7 +10,7 @@ function ProtectedRoute({
   children,
 }: {
   isAuth: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   if (!isAuth) return <Navigate to="/login" replace />;
   return <>{children}</>;
@@ -20,14 +21,29 @@ function PublicOnlyRoute({
   children,
 }: {
   isAuth: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   if (isAuth) return <Navigate to="/events" replace />;
   return <>{children}</>;
 }
 
 export default function AppRoutes() {
-  const isAuth = !!localStorage.getItem("token"); // pas besoin de useMemo ici
+  const [isAuth, setIsAuth] = useState(() => !!localStorage.getItem("token"));
+  useEffect(() => {
+    const syncAuth = () => setIsAuth(!!localStorage.getItem("token"));
+
+    // Si token modifié dans un autre onglet
+    window.addEventListener("storage", syncAuth);
+
+    // Si token modifié dans le même onglet (on déclenche nous-mêmes l’event)
+    window.addEventListener("auth-changed", syncAuth as EventListener);
+
+    return () => {
+      window.removeEventListener("storage", syncAuth);
+      window.removeEventListener("auth-changed", syncAuth as EventListener);
+    };
+  }, []);
+
 
   return (
     <Routes>

@@ -11,7 +11,9 @@ export default function LoginPage() {
     e.preventDefault();
     const token = await login(username, password);
     localStorage.setItem("token", token);
-    navigate("/events");
+    window.dispatchEvent(new Event("auth-changed"));
+    navigate("/events", { replace: true });
+
   }
 
   

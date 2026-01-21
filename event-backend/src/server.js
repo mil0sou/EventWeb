@@ -1,3 +1,5 @@
+
+
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -6,12 +8,16 @@ app.use(cors());
 
 const { login, register } = require("./auth/authcontroller");
 const { requireAuth } = require("./auth/authmiddleware");
+const { listEvents,createEvent } = require("./events/eventscontroller");
 
 app.post("/api/login",login)
 app.post("/api/validate", requireAuth, (req, res) => {
   res.json({ ok: true, user: req.user });
 });
 app.post("/api/register", register);
+app.get("/api/events", listEvents);
+app.post("/api/events", requireAuth, createEvent);
+
 
 
 const PORT=5000;

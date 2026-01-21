@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useEffect, useState, type ReactNode } from "react";
 import LoginPage from "./Page/LoginPage";
 import RegisterPage from "./Page/RegisterPage"; // si tu l'as
-// import EventsPage from "./Page/EventsPage";
+import EventsPage from "./Page/EventsPage";
 // import ProfilePage from "./Page/ProfilePage";
 
 function ProtectedRoute({
@@ -72,28 +72,16 @@ export default function AppRoutes() {
         }
       />
 
-      {/* Routes protégées (uniquement si connecté) */}
       <Route
         path="/events"
         element={
           <ProtectedRoute isAuth={isAuth}>
-            <div>EVENTS ✅</div>
-            {/* <EventsPage /> */}
+            <EventsPage user={{ id: "1", username: "test" }} />
           </ProtectedRoute>
         }
       />
 
-      {/* Exemple d’autre route protégée */}
-      {/*
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute isAuth={isAuth}>
-            <ProfilePage />
-          </ProtectedRoute>
-        }
-      />
-      */}
+
 
       {/* 404 */}
       <Route path="*" element={<Navigate to="/" replace />} />

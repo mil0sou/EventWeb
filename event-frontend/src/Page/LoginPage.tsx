@@ -33,6 +33,7 @@ async function handleSubmit(e: React.FormEvent) {
     <form onSubmit={handleSubmit}>
     <input
       value={username}
+      autoComplete="username"
       onChange={(e) => {
         setUsername(e.target.value);
         setError(null);
@@ -42,6 +43,7 @@ async function handleSubmit(e: React.FormEvent) {
     <input
       type="password"
       value={password}
+      autoComplete="current-password"
       onChange={(e) => {
         setPassword(e.target.value);
         setError(null);

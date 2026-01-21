@@ -18,8 +18,8 @@ export default function RegisterPage() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input value={username} onChange={(e) => setUsername(e.target.value)} />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <input value={username} autoComplete="username" onChange={(e) => setUsername(e.target.value)} />
+      <input type="password" autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <button type="submit">Créer un compte</button>
     <p style={{ marginTop: 10 }}>
       <Link to="/login">← Retour à la connexion</Link>

@@ -81,8 +81,6 @@ export default function AppRoutes() {
         }
       />
 
-
-
       {/* 404 */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

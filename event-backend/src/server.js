@@ -8,7 +8,7 @@ app.use(cors());
 
 const { login, register } = require("./auth/authcontroller");
 const { requireAuth } = require("./auth/authmiddleware");
-const { listEvents,createEvent } = require("./events/eventscontroller");
+const { listEvents,createEvent,getEventDetails } = require("./events/eventscontroller");
 
 app.post("/api/login",login)
 app.post("/api/validate", requireAuth, (req, res) => {
@@ -17,6 +17,7 @@ app.post("/api/validate", requireAuth, (req, res) => {
 app.post("/api/register", register);
 app.get("/api/events", listEvents);
 app.post("/api/events", requireAuth, createEvent);
+app.get("/api/events/:id", requireAuth, getEventDetails);
 
 
 

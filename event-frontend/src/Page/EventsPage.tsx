@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getEvents, createEvent} from "../API/events-actions.ts";
+import { getEvents, createEvent, getEventDetails  } from "../API/events-actions.ts";
 import type { EventItem } from "../utils/types";
 
 
@@ -91,16 +91,28 @@ export default function EventsPage() {
       setSaving(false);
     }
   }
-  function openEventDetails(ev: EventItem) {
+  async function openEventDetails(ev: EventItem) {
     setSelectedEvent(ev);
     setShowDetails(true);
 
-    // reset UI (en attendant qu'on branche l'API)
     setRemaining(null);
     setIsRegistered(false);
     setDetailsError(null);
+    setDetailsLoading(true);
 
-    // plus tard: on fetch les détails ici
+    try {
+      const full = await getEventDetails(ev.id);
+
+      // on met à jour l’event sélectionné avec les champs complets
+      setSelectedEvent(full);
+
+      setRemaining(full.remaining ?? null);
+      setIsRegistered(!!full.isRegistered);
+    } catch (err) {
+      setDetailsError(err instanceof Error ? err.message : "Erreur");
+    } finally {
+      setDetailsLoading(false);
+    }
   }
   function closeEventDetails() {
     setShowDetails(false);

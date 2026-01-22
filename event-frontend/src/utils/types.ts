@@ -14,5 +14,7 @@ export interface EventItem {
   event_date: string;   // ISO ou "YYYY-MM-DD"
   capacity: number;
   organizer: string;    // username (si ton back renvoie ça)
-  // remaining?: number; // si ton back renvoie places restantes
+  remaining?: number;
+  isRegistered?: boolean;
+
 }

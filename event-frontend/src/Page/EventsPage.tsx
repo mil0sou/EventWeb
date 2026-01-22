@@ -20,8 +20,6 @@ export default function EventsPage() {
   const [saving, setSaving] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
-
-  // données "détails" (places restantes, inscrit ou pas)
   const [remaining, setRemaining] = useState<number | null>(null);
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
   const [detailsLoading, setDetailsLoading] = useState(false);
@@ -118,7 +116,6 @@ export default function EventsPage() {
     setShowDetails(false);
     setSelectedEvent(null);
   }
-
   return (
     <div style={{ padding: 20 }}>
       <h2>PAGE EVENTS</h2>
@@ -128,11 +125,6 @@ export default function EventsPage() {
       <button onClick={openCreateEvent}>Nouvel évenement</button>
 
       <hr style={{ margin: "16px 0" }} />
-
-
-
-
-
 
       <h3>Événements</h3>
 
@@ -175,9 +167,6 @@ export default function EventsPage() {
           </div>
         ))}
       </div>
-
-
-
 
       {showCreate && (
         <div
@@ -347,7 +336,6 @@ export default function EventsPage() {
         </div>
       </div>
     )}
-
     </div>
   );
 }

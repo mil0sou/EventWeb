@@ -260,6 +260,31 @@ async function updateEvent(req, res) {
   }
 }
 
+async function listParticipants(req, res) {
+  const eventId = Number(req.params.id);
+
+  if (!Number.isInteger(eventId)) {
+    return res.status(400).json({ error: "ID invalide" });
+  }
+
+  try {
+    const result = await pool.query(
+      `
+      SELECT u.id, u.username
+      FROM registrations r
+      JOIN users u ON u.id = r.user_id
+      WHERE r.event_id = $1
+      ORDER BY u.username ASC
+      `,
+      [eventId]
+    );
+
+    res.json(result.rows); // [{id, username}, ...]
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Impossible de charger les participants" });
+  }
+}
 
 module.exports = {
   listEvents,
@@ -269,4 +294,5 @@ module.exports = {
   unregisterFromEvent,
   deleteEvent,
   updateEvent,
+  listParticipants,
 };

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getEvents, createEvent, getEventDetails, registerEvent, unregisterEvent, deleteEventById,updateEventById   } from "../API/events-actions.ts";
+import { getEvents, createEvent, getEventDetails, registerEvent, unregisterEvent, deleteEventById,updateEventById,getParticipants    } from "../API/events-actions.ts";
 import type { EventItem } from "../utils/types";
 
 
@@ -29,6 +29,8 @@ export default function EventsPage() {
   const [editDescription, setEditDescription] = useState("");
   const [editDate, setEditDate] = useState("");
   const [editCapacity, setEditCapacity] = useState(1);
+  const [participants, setParticipants] = useState<{ id: number; username: string }[]>([]);
+  const [participantsLoading, setParticipantsLoading] = useState(false);
 
 
 
@@ -107,7 +109,13 @@ export default function EventsPage() {
 
     try {
       const full = await getEventDetails(ev.id);
-
+      setParticipantsLoading(true);
+      try {
+        const ppl = await getParticipants(ev.id);
+        setParticipants(ppl);
+      } finally {
+        setParticipantsLoading(false);
+      }
       // on met à jour l’event sélectionné avec les champs complets
       setSelectedEvent(full);
       setEditTitle(full.title);
@@ -331,6 +339,30 @@ export default function EventsPage() {
                 <div>
                   <b>Organisateur:</b> {selectedEvent.organizer}
                 </div>
+
+                
+                <div>
+                  <b>Participants</b>
+
+                  {participantsLoading ? (
+                    <p style={{ opacity: 0.7 }}>Chargement...</p>
+                  ) : participants.length === 0 ? (
+                    <p style={{ opacity: 0.7 }}>Aucun participant</p>
+                  ) : (
+                    <ul style={{ margin: "6px 0 0 16px" }}>
+                      {participants.map((p) => (
+                        <li key={p.id}>
+                          {p.username}
+                          {p.username === username && (
+                            <span style={{ opacity: 0.6 }}> (toi)</span>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+
+                
               </div>
             </>
           ) : (
@@ -418,8 +450,12 @@ export default function EventsPage() {
 
                   if (isRegistered) {
                     await unregisterEvent(selectedEvent.id);
+                    const ppl = await getParticipants(selectedEvent.id);
+                    setParticipants(ppl);
                   } else {
                     await registerEvent(selectedEvent.id);
+                    const ppl = await getParticipants(selectedEvent.id);
+                    setParticipants(ppl);
                   }
 
                   // Recharger détails (remaining + isRegistered)

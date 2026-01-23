@@ -121,3 +121,18 @@ export async function updateEventById(
     throw new Error(msg?.error ?? "Modification impossible");
   }
 }
+
+export async function getParticipants(eventId: number): Promise<{ id: number; username: string }[]> {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(`http://localhost:5000/api/events/${eventId}/participants`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+
+  if (!res.ok) {
+    const msg = await res.json().catch(() => null);
+    throw new Error(msg?.error ?? "Impossible de charger les participants");
+  }
+
+  return res.json();
+}

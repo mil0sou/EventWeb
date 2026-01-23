@@ -16,6 +16,7 @@ const {
   unregisterFromEvent,
   deleteEvent,
   updateEvent,
+  listParticipants,
 
 } = require("./events/eventscontroller");
 
@@ -27,11 +28,11 @@ app.post("/api/register", register);
 app.get("/api/events", listEvents);
 app.post("/api/events", requireAuth, createEvent);
 app.get("/api/events/:id", requireAuth, getEventDetails);
-
 app.post("/api/events/:id/register", requireAuth, registerToEvent);
 app.delete("/api/events/:id/register", requireAuth, unregisterFromEvent);
 app.delete("/api/events/:id", requireAuth, deleteEvent);
 app.put("/api/events/:id", requireAuth, updateEvent);
+app.get("/api/events/:id/participants", requireAuth, listParticipants);
 
 
 

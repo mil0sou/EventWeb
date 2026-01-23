@@ -95,3 +95,29 @@ export async function deleteEventById(id: number) {
     throw new Error(msg?.error ?? "Suppression impossible");
   }
 }
+
+export async function updateEventById(
+  id: number,
+  payload: {
+    title: string;
+    description: string;
+    event_date: string;
+    capacity: number;
+  }
+) {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(`http://localhost:5000/api/events/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    const msg = await res.json().catch(() => null);
+    throw new Error(msg?.error ?? "Modification impossible");
+  }
+}

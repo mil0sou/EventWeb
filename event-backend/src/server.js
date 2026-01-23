@@ -15,7 +15,9 @@ const {
   registerToEvent,
   unregisterFromEvent,
   deleteEvent,
-} = require("./events/eventsController");
+  updateEvent,
+
+} = require("./events/eventscontroller");
 
 app.post("/api/login",login)
 app.post("/api/validate", requireAuth, (req, res) => {
@@ -29,6 +31,7 @@ app.get("/api/events/:id", requireAuth, getEventDetails);
 app.post("/api/events/:id/register", requireAuth, registerToEvent);
 app.delete("/api/events/:id/register", requireAuth, unregisterFromEvent);
 app.delete("/api/events/:id", requireAuth, deleteEvent);
+app.put("/api/events/:id", requireAuth, updateEvent);
 
 
 

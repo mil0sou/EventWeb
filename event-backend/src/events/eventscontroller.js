@@ -208,6 +208,59 @@ async function deleteEvent(req, res) {
   }
 }
 
+async function updateEvent(req, res) {
+  const eventId = Number(req.params.id);
+  const userId = req.user.id;
+  const { title, description, event_date, capacity } = req.body;
+
+  if (!Number.isInteger(eventId)) {
+    return res.status(400).json({ error: "ID invalide" });
+  }
+
+  if (!title || !description || !event_date || !capacity) {
+    return res.status(400).json({ error: "Champs manquants" });
+  }
+
+  const cap = Number(capacity);
+  if (!Number.isInteger(cap) || cap <= 0) {
+    return res.status(400).json({ error: "Capacité invalide" });
+  }
+
+  try {
+    // Vérifier que l'utilisateur est l'organisateur
+    const check = await pool.query(
+      "SELECT organizer_id FROM events WHERE id = $1",
+      [eventId]
+    );
+
+    if (check.rows.length === 0) {
+      return res.status(404).json({ error: "Événement introuvable" });
+    }
+
+    if (check.rows[0].organizer_id !== userId) {
+      return res.status(403).json({ error: "Interdit" });
+    }
+
+    await pool.query(
+      `
+      UPDATE events
+      SET title = $1,
+          description = $2,
+          event_date = $3,
+          capacity = $4
+      WHERE id = $5
+      `,
+      [title, description, event_date, cap, eventId]
+    );
+
+    res.json({ ok: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Modification impossible" });
+  }
+}
+
+
 module.exports = {
   listEvents,
   createEvent,
@@ -215,4 +268,5 @@ module.exports = {
   registerToEvent,
   unregisterFromEvent,
   deleteEvent,
+  updateEvent,
 };

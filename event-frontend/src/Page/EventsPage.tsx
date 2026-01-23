@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getEvents, createEvent, getEventDetails, registerEvent, unregisterEvent, deleteEventById,  } from "../API/events-actions.ts";
+import { getEvents, createEvent, getEventDetails, registerEvent, unregisterEvent, deleteEventById,updateEventById   } from "../API/events-actions.ts";
 import type { EventItem } from "../utils/types";
 
 
@@ -24,6 +24,13 @@ export default function EventsPage() {
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
   const [detailsLoading, setDetailsLoading] = useState(false);
   const [detailsError, setDetailsError] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+  const [editDate, setEditDate] = useState("");
+  const [editCapacity, setEditCapacity] = useState(1);
+
+
 
   useEffect(() => {
     (async () => {
@@ -103,6 +110,11 @@ export default function EventsPage() {
 
       // on met à jour l’event sélectionné avec les champs complets
       setSelectedEvent(full);
+      setEditTitle(full.title);
+      setEditDescription(full.description);
+      setEditDate(full.event_date.slice(0, 10));
+      setEditCapacity(full.capacity);
+      setIsEditing(false);
 
       setRemaining(full.remaining ?? null);
       setIsRegistered(!!full.isRegistered);
@@ -116,6 +128,37 @@ export default function EventsPage() {
     setShowDetails(false);
     setSelectedEvent(null);
   }
+  async function handleUpdateEvent(e: React.FormEvent) {
+    e.preventDefault();
+    if (!selectedEvent) return;
+
+    try {
+      setDetailsLoading(true);
+      setDetailsError(null);
+
+      await updateEventById(selectedEvent.id, {
+        title: editTitle.trim(),
+        description: editDescription.trim(),
+        event_date: editDate,
+        capacity: editCapacity,
+      });
+
+      const full = await getEventDetails(selectedEvent.id);
+      setSelectedEvent(full);
+      setRemaining(full.remaining ?? null);
+      setIsRegistered(!!full.isRegistered);
+
+      const data = await getEvents();
+      setEvents(data);
+
+      setIsEditing(false);
+    } catch (err) {
+      setDetailsError(err instanceof Error ? err.message : "Erreur");
+    } finally {
+      setDetailsLoading(false);
+    }
+  }
+
   return (
     <div style={{ padding: 20 }}>
       <h2>PAGE EVENTS</h2>
@@ -277,32 +320,59 @@ export default function EventsPage() {
           }}
         >
           <h3 style={{ marginTop: 0 }}>{selectedEvent.title}</h3>
-          <p style={{ opacity: 0.9 }}>{selectedEvent.description}</p>
+          {!isEditing ? (
+            <>
+              <p style={{ opacity: 0.9 }}>{selectedEvent.description}</p>
 
-          <div style={{ display: "grid", gap: 6, opacity: 0.9, marginTop: 12 }}>
-            <div>
-              <b>Date:</b> {selectedEvent.event_date.slice(0, 10)}
-            </div>
-            <div>
-              <b>Capacité:</b> {selectedEvent.capacity}
-            </div>
-            <div>
-              <b>Places restantes:</b>{" "}
-              {remaining === null ? "…" : remaining}
-            </div>
-            <div>
-              <b>Organisateur:</b> {selectedEvent.organizer}
-              {selectedEvent.organizer === username && (
-                <span style={{ marginLeft: 6, color: "gold" }}>(ADMIN)</span>
-              )}
-            </div>
-          </div>
+              <div style={{ display: "grid", gap: 6, opacity: 0.9, marginTop: 12 }}>
+                <div><b>Date:</b> {selectedEvent.event_date.slice(0, 10)}</div>
+                <div><b>Capacité:</b> {selectedEvent.capacity}</div>
+                <div><b>Places restantes:</b> {remaining}</div>
+                <div>
+                  <b>Organisateur:</b> {selectedEvent.organizer}
+                </div>
+              </div>
+            </>
+          ) : (
+            <form onSubmit={handleUpdateEvent} style={{ display: "grid", gap: 10, marginTop: 10 }}>
+              <input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} />
+              <textarea
+                value={editDescription}
+                rows={4}
+                onChange={(e) => setEditDescription(e.target.value)}
+              />
+              <input type="date" value={editDate} onChange={(e) => setEditDate(e.target.value)} />
+              <input
+                type="number"
+                min={1}
+                value={editCapacity}
+                onChange={(e) => setEditCapacity(Number(e.target.value))}
+              />
+
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}>
+                <button type="button" onClick={() => setIsEditing(false)}>
+                  Annuler
+                </button>
+                <button type="submit" disabled={detailsLoading}>
+                  Enregistrer
+                </button>
+              </div>
+            </form>
+          )}
+
 
           {detailsError && (
             <p style={{ color: "crimson", marginTop: 10 }}>{detailsError}</p>
           )}
 
           <div style={{ display: "flex", justifyContent: "space-between", gap: 8, marginTop: 16 }}>
+            {/* modifier : grisé si pas l'admin */}
+            {selectedEvent.organizer === username && !isEditing && (
+              <button onClick={() => setIsEditing(true)}>
+                Modifier
+              </button>
+            )}
+
             {/* Supprimer : grisé si pas l'admin */}
             <button
               disabled={selectedEvent.organizer !== username}

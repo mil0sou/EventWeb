@@ -22,7 +22,6 @@ async function listEvents(req, res) {
   }
 }
 
-
 async function createEvent(req, res) {
   try {
     const { title, description, event_date, capacity } = req.body;
@@ -54,7 +53,6 @@ async function createEvent(req, res) {
     res.status(500).json({ error: "Impossible de créer l'événement" });
   }
 }
-
 
 async function getEventDetails(req, res) {
   try {

@@ -318,28 +318,8 @@ return (
 
 
       {showDetails && selectedEvent && (
-        <div
-        onClick={closeEventDetails}
-        style={{
-          position: "fixed",
-          inset: 0,
-          background: "rgba(0,0,0,0.5)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: 20,
-        }}
-      >
-        <div
-          onClick={(e) => e.stopPropagation()}
-          style={{
-            background: "rgb(24, 24, 24)",
-            borderRadius: 12,
-            padding: 16,
-            width: "min(520px, 100%)",
-            border: "1px solid #333",
-          }}
-        >
+        <div className = "modalOverlay" onClick={closeEventDetails}>
+        <div onClick={(e) => e.stopPropagation()} className= "modalContent">
           <h3 style={{ marginTop: 0 }}>{selectedEvent.title}</h3>
           {!isEditing ? (
             <>

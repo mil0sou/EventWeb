@@ -286,13 +286,4 @@ async function listParticipants(req, res) {
   }
 }
 
-module.exports = {
-  listEvents,
-  createEvent,
-  getEventDetails,
-  registerToEvent,
-  unregisterFromEvent,
-  deleteEvent,
-  updateEvent,
-  listParticipants,
-};
+module.exports = {listEvents,createEvent,getEventDetails,registerToEvent,unregisterFromEvent,deleteEvent,updateEvent,listParticipants,};

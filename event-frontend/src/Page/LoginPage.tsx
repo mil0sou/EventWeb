@@ -1,7 +1,7 @@
 import { useState } from "react";
-
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../API/auth-actions";
+import "./style/LoginPage.scss";
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
@@ -29,39 +29,60 @@ async function handleSubmit(e: React.FormEvent) {
 }
 
   
-  return (
-    <form onSubmit={handleSubmit}>
-    <input
-      value={username}
-      autoComplete="username"
-      onChange={(e) => {
-        setUsername(e.target.value);
-        setError(null);
-      }}
-    />
+return (
+  <div className="authWrap">
+    <div className="card authCard">
+      <h1 className="authTitle">Connexion</h1>
+      <p className="authSub">Connecte toi pr t'inscrire et créer des évenements</p>
 
-    <input
-      type="password"
-      value={password}
-      autoComplete="current-password"
-      onChange={(e) => {
-        setPassword(e.target.value);
-        setError(null);
-      }}
-    />
-      <button type="submit">Se connecter</button>
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="row">
+          <label className="label" htmlFor="username">Nom d’utilisateur</label>
+          <input
+            id="username"
+            className="input"
+            value={username}
+            autoComplete="username"
+            onChange={(e) => {
+              setUsername(e.target.value);
+              setError(null);
+            }}
+          />
+        </div>
 
-      <p>
-        Pas de compte ? <Link to="/register">Créer un compte</Link>
-      </p>
-      {error && (
-        <p style={{ color: "crimson", marginTop: 10 }}>
-          {error}
-        </p>
-      )}
-    </form>
-  );
-}
+        <div className="row">
+          <label className="label" htmlFor="password">Mot de passe</label>
+          <input
+            id="password"
+            className="input"
+            type="password"
+            value={password}
+            autoComplete="current-password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setError(null);
+            }}
+          />
+        </div>
+
+        <button className="btn btnPrimary" type="submit">
+          Se connecter
+        </button>
+
+        <Link to="/register" className="btn btnSecondary">
+          Créer un compte
+        </Link>
+
+        
+        {error && <div className="error">{error}</div>}
+      </form>
+    </div>
+  </div>
+);
+
+
+
+  }
 
 
 

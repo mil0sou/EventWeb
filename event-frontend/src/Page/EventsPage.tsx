@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getEvents, createEvent, getEventDetails  } from "../API/events-actions.ts";
+import { getEvents, createEvent, getEventDetails, registerEvent, unregisterEvent, deleteEventById,  } from "../API/events-actions.ts";
 import type { EventItem } from "../utils/types";
 
 
@@ -306,10 +306,27 @@ export default function EventsPage() {
             {/* Supprimer : grisé si pas l'admin */}
             <button
               disabled={selectedEvent.organizer !== username}
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.stopPropagation();
-                // TODO: appeler delete endpoint
+                if (!selectedEvent) return;
+
+                try {
+                  setDetailsLoading(true);
+                  setDetailsError(null);
+
+                  await deleteEventById(selectedEvent.id);
+
+                  // Fermer la modale + refresh liste
+                  closeEventDetails();
+                  const data = await getEvents();
+                  setEvents(data);
+                } catch (err) {
+                  setDetailsError(err instanceof Error ? err.message : "Erreur");
+                } finally {
+                  setDetailsLoading(false);
+                }
               }}
+
               style={{
                 opacity: selectedEvent.organizer !== username ? 0.4 : 1,
                 cursor: selectedEvent.organizer !== username ? "not-allowed" : "pointer",
@@ -321,10 +338,36 @@ export default function EventsPage() {
             <div style={{ display: "flex", gap: 8 }}>
               {/* Inscription toggle */}
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  // TODO: register/unregister endpoint
-                }}
+              onClick={async (e) => {
+                e.stopPropagation();
+                if (!selectedEvent) return;
+
+                try {
+                  setDetailsLoading(true);
+                  setDetailsError(null);
+
+                  if (isRegistered) {
+                    await unregisterEvent(selectedEvent.id);
+                  } else {
+                    await registerEvent(selectedEvent.id);
+                  }
+
+                  // Recharger détails (remaining + isRegistered)
+                  const full = await getEventDetails(selectedEvent.id);
+                  setSelectedEvent(full);
+                  setRemaining(full.remaining ?? null);
+                  setIsRegistered(!!full.isRegistered);
+
+                  // Optionnel: refresh la liste aussi
+                  const data = await getEvents();
+                  setEvents(data);
+                } catch (err) {
+                  setDetailsError(err instanceof Error ? err.message : "Erreur");
+                } finally {
+                  setDetailsLoading(false);
+                }
+              }}
+
                 disabled={detailsLoading}
               >
                 {isRegistered ? "Se désinscrire" : "S'inscrire"}

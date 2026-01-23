@@ -53,3 +53,45 @@ export async function getEventDetails(id: number): Promise<EventItem> {
 
   return res.json();
 }
+
+export async function registerEvent(id: number) {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(`http://localhost:5000/api/events/${id}/register`, {
+    method: "POST",
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+
+  if (!res.ok) {
+    const msg = await res.json().catch(() => null);
+    throw new Error(msg?.error ?? "Inscription impossible");
+  }
+}
+
+export async function unregisterEvent(id: number) {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(`http://localhost:5000/api/events/${id}/register`, {
+    method: "DELETE",
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+
+  if (!res.ok) {
+    const msg = await res.json().catch(() => null);
+    throw new Error(msg?.error ?? "Désinscription impossible");
+  }
+}
+
+export async function deleteEventById(id: number) {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(`http://localhost:5000/api/events/${id}`, {
+    method: "DELETE",
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+
+  if (!res.ok) {
+    const msg = await res.json().catch(() => null);
+    throw new Error(msg?.error ?? "Suppression impossible");
+  }
+}

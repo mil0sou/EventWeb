@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getEvents, createEvent, getEventDetails, registerEvent, unregisterEvent, deleteEventById,updateEventById,getParticipants    } from "../API/events-actions.ts";
 import type { EventItem } from "../utils/types";
+import "./style/EventsPage.scss";
 
 
 export default function EventsPage() {
@@ -167,13 +168,25 @@ export default function EventsPage() {
     }
   }
 
-  return (
-    <div style={{ padding: 20 }}>
-      <h2>PAGE EVENTS</h2>
-      <p>Connecté en tant que : <b>{username}</b></p>
+return (
+  <div className="eventsWrap">
+    <div className="eventsTop">
+      <div>
+        <h1 className="eventsTitle">Événements</h1>
+        <p className="eventsSub">
+          Connecté en tant que : <b>{username}</b>
+        </p>
+      </div>
 
-      <button onClick={logout}>Se déconnecter</button>
-      <button onClick={openCreateEvent}>Nouvel évenement</button>
+      <div className="eventsActions">
+        <button className="btn btnSecondary" onClick={logout}>Se déconnecter</button>
+        <button className="btn btnPrimary" onClick={openCreateEvent}>Nouvel événement</button>
+      </div>
+    </div>
+
+    <div className="divider" />
+
+
 
       <hr style={{ margin: "16px 0" }} />
 
@@ -400,46 +413,44 @@ export default function EventsPage() {
           <div style={{ display: "flex", justifyContent: "space-between", gap: 8, marginTop: 16 }}>
             {/* modifier : grisé si pas l'admin */}
             {selectedEvent.organizer === username && !isEditing && (
-              <button onClick={() => setIsEditing(true)}>
+              <button className="btn btnSecondary" onClick={() => setIsEditing(true)}>
                 Modifier
               </button>
             )}
 
             {/* Supprimer : grisé si pas l'admin */}
-            <button
-              disabled={selectedEvent.organizer !== username}
-              onClick={async (e) => {
-                e.stopPropagation();
-                if (!selectedEvent) return;
+            {selectedEvent.organizer === username && (
+              <button
+                className="btn btnDanger"
+                onClick={async (e) => {
+                  e.stopPropagation();
+                  if (!selectedEvent) return;
 
-                try {
-                  setDetailsLoading(true);
-                  setDetailsError(null);
+                  try {
+                    setDetailsLoading(true);
+                    setDetailsError(null);
 
-                  await deleteEventById(selectedEvent.id);
+                    await deleteEventById(selectedEvent.id);
 
-                  // Fermer la modale + refresh liste
-                  closeEventDetails();
-                  const data = await getEvents();
-                  setEvents(data);
-                } catch (err) {
-                  setDetailsError(err instanceof Error ? err.message : "Erreur");
-                } finally {
-                  setDetailsLoading(false);
-                }
-              }}
+                    // Fermer la modale + refresh liste
+                    closeEventDetails();
+                    const data = await getEvents();
+                    setEvents(data);
+                  } catch (err) {
+                    setDetailsError(err instanceof Error ? err.message : "Erreur");
+                  } finally {
+                    setDetailsLoading(false);
+                  }
+                }}
+              >
+                Supprimer
+              </button>
+            )}
 
-              style={{
-                opacity: selectedEvent.organizer !== username ? 0.4 : 1,
-                cursor: selectedEvent.organizer !== username ? "not-allowed" : "pointer",
-              }}
-            >
-              Supprimer
-            </button>
 
             <div style={{ display: "flex", gap: 8 }}>
               {/* Inscription toggle */}
-              <button
+              <button className="btn btnPrimary"
               onClick={async (e) => {
                 e.stopPropagation();
                 if (!selectedEvent) return;
@@ -476,10 +487,12 @@ export default function EventsPage() {
 
                 disabled={detailsLoading}
               >
-                {isRegistered ? "Se désinscrire" : "S'inscrire"}
+                {isRegistered ? "Désinscrire" : "S'inscrire"}
               </button>
 
-              <button onClick={closeEventDetails}>Fermer</button>
+              <button className="btn btnGhost" onClick={closeEventDetails}>
+                Fermer
+              </button>
             </div>
           </div>
         </div>

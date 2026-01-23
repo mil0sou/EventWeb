@@ -17,13 +17,10 @@ const {
   deleteEvent,
   updateEvent,
   listParticipants,
-
 } = require("./events/eventscontroller");
 
 app.post("/api/login",login)
-app.post("/api/validate", requireAuth, (req, res) => {
-  res.json({ ok: true, user: req.user });
-});
+app.post("/api/validate", requireAuth, (req, res) => {res.json({ ok: true, user: req.user });});
 app.post("/api/register", register);
 app.get("/api/events", listEvents);
 app.post("/api/events", requireAuth, createEvent);
@@ -33,8 +30,6 @@ app.delete("/api/events/:id/register", requireAuth, unregisterFromEvent);
 app.delete("/api/events/:id", requireAuth, deleteEvent);
 app.put("/api/events/:id", requireAuth, updateEvent);
 app.get("/api/events/:id/participants", requireAuth, listParticipants);
-
-
 
 const PORT=5000;
 app.listen(PORT,()=>{console.log(`Server running on port ${PORT}`);})

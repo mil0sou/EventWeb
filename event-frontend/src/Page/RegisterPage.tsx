@@ -8,14 +8,28 @@ import "./style/RegisterPage.scss";
 export default function RegisterPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+async function handleSubmit(e: React.FormEvent) {
+  e.preventDefault();
+  setError(null);
+
+  try {
     const token = await register(username, password);
     localStorage.setItem("token", token);
     navigate("/events");
+  } catch (err) {
+    const e2 = err as Error & { status?: number };
+
+    if (e2.status === 409) {
+      setError("Ce nom d’utilisateur est déjà utilisé");
+    } else {
+      setError(e2.message || "Erreur lors de la création du compte");
+    }
   }
+}
+
 
   return (
     <div className="authWrap">
@@ -48,6 +62,7 @@ export default function RegisterPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {error && <p className="formError">{error}</p>}
 
           <button className="btn btnPrimary" type="submit">
             Créer un compte

@@ -26,9 +26,16 @@ export async function register(username: string, password: string) {
   });
 
   const data = await res.json();
-  if (!res.ok) throw new Error(data.message);
+
+  if (!res.ok) {
+    const err = new Error(data.message || "Erreur register") as Error & { status?: number };
+    err.status = res.status;        
+    throw err;
+  }
+
   return data.token;
 }
+
 
 
 export async function validateToken():Promise<User>{

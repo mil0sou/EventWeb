@@ -14,5 +14,7 @@ pg admin
 
 TODO : 
  - Bloquer l'édit quand on veut réduire le nombre de places en dessous du nombre d'inscrits sinon on part en négatif 
- - Bloquer la création de compte avec mdp ou username vide pour ensuite une connexion avec rien 
+ - FAIT Bloquer la création de compte avec mdp ou username vide pour ensuite une connexion avec rien 
  - Subdiviser Eventspage en composants
+ - FAIT Boutons stylés dans modif d'event et dans nouvel event 
+ - Supprimer boutons supprimer, inscrire et fermer dans la modale d'édition d'event

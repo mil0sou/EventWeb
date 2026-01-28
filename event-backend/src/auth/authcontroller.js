@@ -35,6 +35,10 @@ exports.login = async (req, res) => {
 exports.register = async (req, res) => {
   const { username, password } = req.body;
 
+  if (!username || !password) {
+    return res.status(400).json({ message: "Username et mot de passe requis" });
+  }
+  
   // vérifier si user existe
   const existing = await pool.query(
     "SELECT id FROM users WHERE username=$1",

@@ -32,6 +32,7 @@ export default function RegisterPage() {
               className="input"
               value={username}
               autoComplete="username"
+              required
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
@@ -43,6 +44,7 @@ export default function RegisterPage() {
               type="password"
               autoComplete="new-password"
               value={password}
+              required
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>

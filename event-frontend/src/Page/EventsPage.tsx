@@ -303,10 +303,10 @@ return (
               {formError && <p style={{ color: "crimson", margin: 0 }}>{formError}</p>}
 
               <div style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}>
-                <button type="button" onClick={closeCreateEvent} disabled={saving}>
+                <button type="button"  className="btn btnSecondary" onClick={closeCreateEvent} disabled={saving}>
                   Fermer
                 </button>
-                <button type="submit" disabled={saving}>
+                <button type="submit"   className="btn btnSecondary" disabled={saving}>
                   {saving ? "Création..." : "Créer"}
                 </button>
               </div>
@@ -375,10 +375,10 @@ return (
               />
 
               <div style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}>
-                <button type="button" onClick={() => setIsEditing(false)}>
+                <button type="button"  className="btn btnSecondary" onClick={() => setIsEditing(false)}>
                   Annuler
                 </button>
-                <button type="submit" disabled={detailsLoading}>
+                <button type="submit"   className="btn btnSecondary" disabled={detailsLoading}>
                   Enregistrer
                 </button>
               </div>

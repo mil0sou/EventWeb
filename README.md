@@ -13,11 +13,9 @@ pg admin
 
 
 TODO : 
- - Login auto quand on créé un compte 
-
+ - FAIT Login auto quand on créé un compte 
  - FAIT Empêcher de créer un event dans le passé
  - FAIT Créer un compte avec les mm crédentials : message d'erreur précis 
-
  - FAIT Enlever tous les styles de tous les tsx
  - FAIT Bloquer l'édit quand on veut réduire le nombre de places en dessous du nombre d'inscrits sinon on part en négatif 
  - FAIT Factoriser création event et modif --> mm formulaire  

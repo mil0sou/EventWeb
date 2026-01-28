@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../API/auth-actions";
+import { login } from "../API/auth-actions";
 import { Link } from "react-router-dom";
 import "./style/RegisterPage.scss";
 
@@ -16,8 +17,13 @@ async function handleSubmit(e: React.FormEvent) {
   setError(null);
 
   try {
-    const token = await register(username, password);
+
+    await register(username, password);
+    const token = await login(username, password);
+
     localStorage.setItem("token", token);
+    localStorage.setItem("username", username); 
+    window.dispatchEvent(new Event("auth-changed"));
     navigate("/events");
   } catch (err) {
     const e2 = err as Error & { status?: number };
@@ -28,6 +34,7 @@ async function handleSubmit(e: React.FormEvent) {
       setError(e2.message || "Erreur lors de la création du compte");
     }
   }
+
 }
 
 

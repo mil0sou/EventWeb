@@ -68,23 +68,26 @@ export default function EventDetailsModal({
 
   return (
     <div className="modalOverlay" onClick={onClose}>
-      <div onClick={(e) => e.stopPropagation()} className="modalContent">
-        <h3 style={{ marginTop: 0 }}>{selectedEvent.title}</h3>
+      <div className="modalContent" onClick={(e) => e.stopPropagation()}>
+        <h3 className="modalTitle">{selectedEvent.title}</h3>
 
         {!isEditing ? (
           <>
-            <p style={{ opacity: 0.9 }}>{selectedEvent.description}</p>
+            <p className="eventDetailsDesc">{selectedEvent.description}</p>
 
-            <div style={{ display: "grid", gap: 6, opacity: 0.9, marginTop: 12 }}>
+            <div className="eventDetailsGrid">
               <div>
                 <b>Date:</b> {selectedEvent.event_date.slice(0, 10)}
               </div>
+
               <div>
                 <b>Capacité:</b> {selectedEvent.capacity}
               </div>
+
               <div>
                 <b>Places restantes:</b> {remaining}
               </div>
+
               <div>
                 <b>Organisateur:</b> {selectedEvent.organizer}
               </div>
@@ -93,16 +96,16 @@ export default function EventDetailsModal({
                 <b>Participants</b>
 
                 {participantsLoading ? (
-                  <p style={{ opacity: 0.7 }}>Aucun participant</p>
+                  <p className="muted">Chargement...</p>
                 ) : participants.length === 0 ? (
-                  <p style={{ opacity: 0.7 }}>Aucun participant</p>
+                  <p className="muted">Aucun participant</p>
                 ) : (
-                  <ul style={{ margin: "6px 0 0 16px" }}>
+                  <ul className="participantsList">
                     {participants.map((p) => (
                       <li key={p.id}>
                         {p.username}
                         {p.username === username && (
-                          <span style={{ opacity: 0.6 }}> (toi)</span>
+                          <span className="muted"> (toi)</span>
                         )}
                       </li>
                     ))}
@@ -112,7 +115,7 @@ export default function EventDetailsModal({
             </div>
           </>
         ) : (
-            <EventForm
+          <EventForm
             title={editTitle}
             description={editDescription}
             date={editDate}
@@ -126,16 +129,13 @@ export default function EventDetailsModal({
             submitLabel="Enregistrer"
             cancelLabel="Annuler"
             disabled={detailsLoading}
-            />
-
+          />
         )}
 
-        {detailsError && (
-          <p style={{ color: "crimson", marginTop: 10 }}>{detailsError}</p>
-        )}
+        {detailsError && <p className="errorText">{detailsError}</p>}
 
-        <div style={{ display: "flex", justifyContent: "space-between", gap: 8, marginTop: 16 }}>
-          {/* modifier : seulement si l'admin */}
+        <div className="eventDetailsFooter">
+          {/* Modifier : seulement si l'admin */}
           {selectedEvent.organizer === username && !isEditing && (
             <button className="btn btnSecondary" onClick={onStartEdit}>
               Modifier
@@ -143,37 +143,38 @@ export default function EventDetailsModal({
           )}
 
           {/* Supprimer : seulement si l'admin */}
-            {selectedEvent.organizer === username && !isEditing && (
+          {selectedEvent.organizer === username && !isEditing && (
             <button
-                className="btn btnDanger"
-                onClick={(e) => {
+              className="btn btnDanger"
+              onClick={(e) => {
                 e.stopPropagation();
                 onDelete();
-                }}
-                disabled={detailsLoading}
+              }}
+              disabled={detailsLoading}
             >
-                Supprimer
+              Supprimer
             </button>
-            )}
-            {!isEditing && (
-            <div style={{ display: "flex", gap: 8 }}>
-                <button
+          )}
+
+          {/* Actions à droite : seulement hors édition */}
+          {!isEditing && (
+            <div className="eventDetailsActions">
+              <button
                 className="btn btnPrimary"
                 onClick={(e) => {
-                    e.stopPropagation();
-                    onToggleRegister();
+                  e.stopPropagation();
+                  onToggleRegister();
                 }}
                 disabled={detailsLoading}
-                >
+              >
                 {isRegistered ? "Désinscrire" : "S'inscrire"}
-                </button>
+              </button>
 
-                <button className="btn btnGhost" onClick={onClose}>
+              <button className="btn btnGhost" onClick={onClose}>
                 Fermer
-                </button>
+              </button>
             </div>
-            )}
-
+          )}
         </div>
       </div>
     </div>

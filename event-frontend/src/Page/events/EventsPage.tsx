@@ -139,43 +139,41 @@ export default function EventsPage() {
     }
   }
 
-  async function openEventDetails(ev: EventItem) {
-    setSelectedEvent(ev);
+async function openEventDetails(ev: EventItem) {
+  // reset état avant chargement
+  setDetailsError(null);
+  setDetailsLoading(true);
+  setParticipantsLoading(true);
+
+  setRemaining(null);
+  setIsRegistered(false);
+  setIsEditing(false);
+
+  try {
+    // charger tout d'abord
+    const full = await getEventDetails(ev.id);
+    const ppl = await getParticipants(ev.id);
+
+    setSelectedEvent(full);
+    setParticipants(ppl);
+
+    setEditTitle(full.title);
+    setEditDescription(full.description);
+    setEditDate(full.event_date.slice(0, 10));
+    setEditCapacity(full.capacity);
+
+    setRemaining(full.remaining ?? null);
+    setIsRegistered(!!full.isRegistered);
+
     setShowDetails(true);
-
-    setRemaining(null);
-    setIsRegistered(false);
-    setDetailsError(null);
-    setDetailsLoading(true);
-
-    try {
-      const full = await getEventDetails(ev.id);
-
-      setParticipantsLoading(true);
-      try {
-        const ppl = await getParticipants(ev.id);
-        setParticipants(ppl);
-      } finally {
-        setParticipantsLoading(false);
-      }
-
-      setSelectedEvent(full);
-
-      // init edit fields
-      setEditTitle(full.title);
-      setEditDescription(full.description);
-      setEditDate(full.event_date.slice(0, 10));
-      setEditCapacity(full.capacity);
-      setIsEditing(false);
-
-      setRemaining(full.remaining ?? null);
-      setIsRegistered(!!full.isRegistered);
-    } catch (err) {
-      setDetailsError(err instanceof Error ? err.message : "Erreur");
-    } finally {
-      setDetailsLoading(false);
-    }
+  } catch (err) {
+    setDetailsError(err instanceof Error ? err.message : "Erreur");
+  } finally {
+    setDetailsLoading(false);
+    setParticipantsLoading(false);
   }
+}
+
 
   function closeEventDetails() {
     setShowDetails(false);

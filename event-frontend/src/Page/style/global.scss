@@ -258,3 +258,42 @@ body {
   margin-left: 6px;
   color: gold;
 }
+.modalTitle {
+  margin-top: 0;
+}
+
+.eventDetailsDesc {
+  opacity: 0.9;
+}
+
+.eventDetailsGrid {
+  display: grid;
+  gap: 6px;
+  opacity: 0.9;
+  margin-top: 12px;
+}
+
+.eventDetailsFooter {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.eventDetailsActions {
+  display: flex;
+  gap: 8px;
+}
+
+.participantsList {
+  margin: 6px 0 0 16px;
+}
+
+.muted {
+  opacity: 0.7;
+}
+
+.errorText {
+  color: crimson;
+  margin-top: 10px;
+}

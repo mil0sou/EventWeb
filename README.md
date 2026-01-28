@@ -13,8 +13,7 @@ pg admin
 
 
 TODO : 
- - Enlever tous les styles de tous les tsx
-
+ - FAIT Enlever tous les styles de tous les tsx
  - FAIT Bloquer l'édit quand on veut réduire le nombre de places en dessous du nombre d'inscrits sinon on part en négatif 
  - FAIT Factoriser création event et modif --> mm formulaire  
  - FAIT Rendre stylé les champs de texte de création et modification d'event

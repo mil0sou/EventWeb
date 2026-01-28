@@ -168,3 +168,41 @@ body {
   padding: 16px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.6);
 }
+.eventForm {
+  display: grid;
+  gap: 12px;
+}
+
+/* Champs */
+.formInput,
+.formTextarea {
+  background: #323232;        
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;          
+  padding: 8px 10px;          
+  color: #eaeaea;
+
+  font-family: inherit;
+  font-size: 0.92rem;
+
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 0px;
+}
+
+/* Placeholder */
+.formInput::placeholder,
+.formTextarea::placeholder {
+  color: #9a9a9a;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: #4f8cff;
+  background: #2b2b2b;        
+}
+

@@ -1,5 +1,6 @@
 import type { EventItem } from "../../utils/types";
 import "../style/EventsPage.scss";
+import EventForm from "./EventForm";
 
 type Participant = { id: number; username: string };
 
@@ -92,7 +93,7 @@ export default function EventDetailsModal({
                 <b>Participants</b>
 
                 {participantsLoading ? (
-                  <p style={{ opacity: 0.7 }}>Chargement...</p>
+                  <p style={{ opacity: 0.7 }}>Aucun participant</p>
                 ) : participants.length === 0 ? (
                   <p style={{ opacity: 0.7 }}>Aucun participant</p>
                 ) : (
@@ -111,45 +112,22 @@ export default function EventDetailsModal({
             </div>
           </>
         ) : (
-          <form
+            <EventForm
+            title={editTitle}
+            description={editDescription}
+            date={editDate}
+            capacity={editCapacity}
+            setTitle={setEditTitle}
+            setDescription={setEditDescription}
+            setDate={setEditDate}
+            setCapacity={setEditCapacity}
             onSubmit={onSubmitEdit}
-            style={{ display: "grid", gap: 10, marginTop: 10 }}
-          >
-            <input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} />
-            <textarea
-              value={editDescription}
-              rows={4}
-              onChange={(e) => setEditDescription(e.target.value)}
-            />
-            <input
-              type="date"
-              value={editDate}
-              onChange={(e) => setEditDate(e.target.value)}
-            />
-            <input
-              type="number"
-              min={1}
-              value={editCapacity}
-              onChange={(e) => setEditCapacity(Number(e.target.value))}
+            onCancel={onCancelEdit}
+            submitLabel="Enregistrer"
+            cancelLabel="Annuler"
+            disabled={detailsLoading}
             />
 
-            <div style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}>
-              <button
-                type="button"
-                className="btn btnSecondary"
-                onClick={onCancelEdit}
-              >
-                Annuler
-              </button>
-              <button
-                type="submit"
-                className="btn btnSecondary"
-                disabled={detailsLoading}
-              >
-                Enregistrer
-              </button>
-            </div>
-          </form>
         )}
 
         {detailsError && (
@@ -165,35 +143,40 @@ export default function EventDetailsModal({
           )}
 
           {/* Supprimer : seulement si l'admin */}
-          {selectedEvent.organizer === username && (
+            {selectedEvent.organizer === username && !isEditing && (
             <button
-              className="btn btnDanger"
-              onClick={(e) => {
+                className="btn btnDanger"
+                onClick={(e) => {
                 e.stopPropagation();
                 onDelete();
-              }}
-              disabled={detailsLoading}
+                }}
+                disabled={detailsLoading}
             >
-              Supprimer
+                Supprimer
             </button>
-          )}
+            )}
+            {!isEditing && (
+            <div style={{ display: "flex", gap: 8 }}>
+                <button
+                className="btn btnPrimary"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onToggleRegister();
+                }}
+                disabled={detailsLoading}
+                >
+                {isRegistered ? "Désinscrire" : "S'inscrire"}
+                </button>
 
-          <div style={{ display: "flex", gap: 8 }}>
-            <button
-              className="btn btnPrimary"
-              onClick={(e) => {
-                e.stopPropagation();
-                onToggleRegister();
-              }}
-              disabled={detailsLoading}
-            >
-              {isRegistered ? "Désinscrire" : "S'inscrire"}
-            </button>
+                <button className="btn btnGhost" onClick={onClose}>
+                Fermer
+                </button>
+            </div>
+            )}
 
-            <button className="btn btnGhost" onClick={onClose}>
-              Fermer
-            </button>
-          </div>
+
+
+          
         </div>
       </div>
     </div>

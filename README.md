@@ -15,12 +15,13 @@ pg admin
 TODO : 
 
  - Bloquer l'édit quand on veut réduire le nombre de places en dessous du nombre d'inscrits sinon on part en négatif 
- - Supprimer boutons supprimer, inscrire et fermer dans la modale d'édition d'event
- - Rendre stylé les champs de texte de création et modification d'event
 
+ - FAIT Factoriser création event et modif --> mm formulaire  
+ - FAIT Rendre stylé les champs de texte de création et modification d'event
  - FAIT Subdiviser Eventspage en composants
  - FAIT Bloquer la création de compte avec mdp ou username vide pour ensuite une connexion avec rien 
  - FAIT Boutons stylés dans modif d'event et dans nouvel event 
+ - FAIT Supprimer boutons supprimer, inscrire et fermer dans la modale d'édition d'event
 
 
 

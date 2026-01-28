@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useEffect, useState, type ReactNode } from "react";
 import LoginPage from "./Page/LoginPage";
 import RegisterPage from "./Page/RegisterPage"; // si tu l'as
-import EventsPage from "./Page/EventsPage";
+import EventsPage from "./Page/events/EventsPage";
 // import ProfilePage from "./Page/ProfilePage";
 
 function ProtectedRoute({

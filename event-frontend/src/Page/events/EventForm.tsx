@@ -35,7 +35,6 @@ export default function EventForm({
   return (
     <form onSubmit={onSubmit} className="eventForm">
 
-
     <input
     className="formInput"
     value={title}
@@ -65,9 +64,6 @@ export default function EventForm({
     value={capacity}
     onChange={(e) => setCapacity(Number(e.target.value))}
     />
-
-
-
 
       <div style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}>
         <button type="button" className="btn btnSecondary" onClick={onCancel} disabled={disabled}>

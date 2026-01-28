@@ -24,12 +24,10 @@ type Props = {
 
 export default function CreateEventModal({
   isOpen,
-  username,
   title,
   description,
   eventDate,
   capacity,
-  formError,
   saving,
   setTitle,
   setDescription,
@@ -41,28 +39,9 @@ export default function CreateEventModal({
   if (!isOpen) return null;
 
   return (
-    <div
-      onClick={onClose}
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.5)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 20,
-      }}
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          background: "rgb(24, 24, 24)",
-          borderRadius: 12,
-          padding: 16,
-          width: "min(420px, 100%)",
-        }}
-      >
-        <h3 style={{ marginTop: 0 }}>Créer un événement</h3>
+  <div className="modalOverlay" onClick={onClose}>
+    <div className="modalContent" onClick={(e) => e.stopPropagation()}>
+      <h3 style={{ marginTop: 0 }}>Créer un événement</h3>
 
         <EventForm
         title={title}

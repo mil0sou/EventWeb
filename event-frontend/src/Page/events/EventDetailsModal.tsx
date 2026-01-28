@@ -174,9 +174,6 @@ export default function EventDetailsModal({
             </div>
             )}
 
-
-
-          
         </div>
       </div>
     </div>

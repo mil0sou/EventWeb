@@ -206,3 +206,55 @@ body {
   background: #2b2b2b;        
 }
 
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+}
+
+.modalContent {
+  background: rgb(24, 24, 24);
+  border-radius: 12px;
+  padding: 16px;
+  width: min(420px, 100%);
+}
+
+.eventCard {
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.eventCard:hover {
+  background: #1f1f1f;
+  border-color: #444;
+}
+
+.eventCardTitle {
+  margin: 0 0 6px 0;
+}
+
+.eventCardDesc {
+  margin: 0 0 6px 0;
+  opacity: 0.9;
+}
+
+.eventCardMeta {
+  display: grid;
+  gap: 4px;
+  opacity: 0.9;
+}
+
+.eventCardMe {
+  margin-left: 6px;
+  color: gold;
+}

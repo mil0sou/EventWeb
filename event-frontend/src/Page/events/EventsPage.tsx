@@ -59,6 +59,14 @@ export default function EventsPage() {
   >([]);
   const [participantsLoading, setParticipantsLoading] = useState(false);
 
+
+  const registeredCount =
+    selectedEvent && remaining !== null
+      ? selectedEvent.capacity - remaining
+      : 0;
+
+
+
   // load list
   useEffect(() => {
     (async () => {
@@ -177,7 +185,22 @@ export default function EventsPage() {
   }
 
   async function handleUpdateEvent(e: React.FormEvent) {
+    
     e.preventDefault();
+    if (!selectedEvent) return;
+
+    const registeredCount =
+      remaining !== null
+        ? selectedEvent.capacity - remaining
+        : 0;
+
+    if (editCapacity < registeredCount) {
+      setDetailsError(
+        `Impossible de réduire la capacité en dessous de ${registeredCount} inscrits`
+      );
+      return;
+    }
+    
     if (!selectedEvent) return;
 
     try {
@@ -322,7 +345,10 @@ export default function EventsPage() {
         participants={participants}
         participantsLoading={participantsLoading}
         onClose={closeEventDetails}
-        onStartEdit={() => setIsEditing(true)}
+        onStartEdit={() => {
+          setDetailsError(null);
+          setIsEditing(true);
+        }}
         onCancelEdit={() => setIsEditing(false)}
         onSubmitEdit={handleUpdateEvent}
         onDelete={handleDeleteSelectedEvent}

@@ -112,6 +112,18 @@ export default function EventDetailsModal({
                   </ul>
                 )}
               </div>
+
+              <div className="mapBlock">
+                <a href={mapsUrl} target="_blank" rel="noopener noreferrer">
+                  <iframe
+                    title="map"
+                    src={`https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`}
+                    loading="lazy"
+                  />
+                </a>
+              </div>
+
+
             </div>
           </>
         ) : (

@@ -1,18 +1,21 @@
+# recréer la database
+dropdb -U postgres dbname & createdb -U postgres dbname & psql "postgresql://postgres:milo@localhost:5432/dbname" -f migrations\001_init.sql
 
+# frontend
 cd C:\Users\soula\Documents\SEC3\PW\EventWeb\event-frontend
 npm run dev
+# http://localhost:5173/
 
-http://localhost:5173/
-
+# backend
 cd C:\Users\soula\Documents\SEC3\PW\EventWeb\event-backend
 node src/server.js
-
-http://localhost:5000
-
-pg admin    
+# http://localhost:5000
 
 
 TODO : 
+
+ - Script de migration pour la db 
+
  - FAIT Login auto quand on créé un compte 
  - FAIT Empêcher de créer un event dans le passé
  - FAIT Créer un compte avec les mm crédentials : message d'erreur précis 

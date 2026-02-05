@@ -23,11 +23,12 @@ git clone https://github.com/mil0sou/EventWeb.git
 cd EventWeb
 
 # Configurer la base de données 
-# password : milo
+# password : mdp postgres de CE PC 
+
 cd event-backend/migration_db/migrations
-dropdb -U postgres eventweb 2>/dev/null || true 
-createdb -U postgres eventweb
-psql -U postgres -d eventweb < eventweb.sql
+dropdb -U postgres dbname 2>$null
+createdb -U postgres dbname
+psql -U postgres -d dbname -f eventweb.sql
 
 
 # Installer et lancer le backend
@@ -36,8 +37,8 @@ cd event-backend
 npm install
 node src/server.js 
 
-# Installer et lancer le frontend (dans un nouveau terminal)
-cd ../event-frontend
+# FRONTEND (nouveau terminal, depuis la racine EventWeb)
+cd event-frontend
 npm install
 npm run dev
 ```

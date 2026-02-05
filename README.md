@@ -1,35 +1,46 @@
-# # Event Web App - installation et lancement
+# EventWeb 
 
-# vérif que tout est là 
+Une application web moderne et jolie de gestion d'événements construite avec React, Node.js et PostgreSQL
+
+## Prérequis
+
+- Node.js
+- npm
+- PostgreSQL
+
+##  Installation super rapide
+
+Copiez-collez ces commandes dans votre terminal :
+
+```bash
+# vérif que tout est là
 node -v
 npm -v
 psql --version
-git --version
 
-# cloner le repo
-git clone ...
+# Cloner le projet
+git clone https://github.com/mil0sou/EventWeb.git
 cd EventWeb
 
-# DB
-cd event-backend\migration_db\migrations
-dropdb -U postgres eventweb
+# Configurer la base de données
+cd event-backend/migration_db/migrations
+dropdb -U postgres eventweb 2>/dev/null || true
 createdb -U postgres eventweb
 psql -U postgres -d eventweb < eventweb.sql
 
-# backend
-cd ..\..
+# Installer et lancer le backend
+cd ../../..
 cd event-backend
 npm install
-node src/server.js
+node src/server.js 
 
-# frontend
-cd ..
-cd event-frontend
+# Installer et lancer le frontend (dans un nouveau terminal)
+cd ../event-frontend
 npm install
 npm run dev
+```
 
-# ouverture auto 
-Start-Process http://localhost:5173/
+L'application est dispo en navigateur à l'adresse : **http://localhost:5173**
 
 
 
@@ -48,6 +59,11 @@ TODO :
  - FAIT Bloquer la création de compte avec mdp ou username vide pour ensuite une connexion avec rien 
  - FAIT Boutons stylés dans modif d'event et dans nouvel event 
  - FAIT Supprimer boutons supprimer, inscrire et fermer dans la modale d'édition d'event
+
+
+
+
+
 
 
 

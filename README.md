@@ -22,11 +22,13 @@ psql --version
 git clone https://github.com/mil0sou/EventWeb.git
 cd EventWeb
 
-# Configurer la base de données
+# Configurer la base de données 
+# password : milo
 cd event-backend/migration_db/migrations
-dropdb -U postgres eventweb 2>/dev/null || true
+dropdb -U postgres eventweb 2>/dev/null || true 
 createdb -U postgres eventweb
 psql -U postgres -d eventweb < eventweb.sql
+
 
 # Installer et lancer le backend
 cd ../../..

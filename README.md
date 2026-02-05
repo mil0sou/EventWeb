@@ -49,9 +49,17 @@ L'application est dispo en navigateur à l'adresse : **http://localhost:5173**
 
 
 TODO : 
+ - Bloquer le bouton s'inscrire
+ - voulez vous vrm supprimer ?  
+ - toasts notif 
+ - recherche d'event + filtre
 
- - Script de migration pour la db 
+ - 2e onglet evenemtent passé + futur + mes évenements
+ - profil : mes events inscrits + créés 
 
+
+ - FAIT faire marcher la migration avec des mdp de postgres différents avec un .env
+ - FAIT Script de migration pour la db 
  - FAIT Login auto quand on créé un compte 
  - FAIT Empêcher de créer un event dans le passé
  - FAIT Créer un compte avec les mm crédentials : message d'erreur précis 

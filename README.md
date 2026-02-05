@@ -1,15 +1,36 @@
-# recréer la database
-dropdb -U postgres dbname & createdb -U postgres dbname & psql "postgresql://postgres:milo@localhost:5432/dbname" -f migrations\001_init.sql
+# # Event Web App - installation et lancement
 
-# frontend
-cd C:\Users\soula\Documents\SEC3\PW\EventWeb\event-frontend
-npm run dev
-# http://localhost:5173/
+# vérif que tout est là 
+node -v
+npm -v
+psql --version
+git --version
+
+# cloner le repo
+git clone ...
+cd EventWeb
+
+# DB
+cd event-backend\migration_db\migrations
+dropdb -U postgres eventweb
+createdb -U postgres eventweb
+psql -U postgres -d eventweb < eventweb.sql
 
 # backend
-cd C:\Users\soula\Documents\SEC3\PW\EventWeb\event-backend
+cd ..\..
+cd event-backend
+npm install
 node src/server.js
-# http://localhost:5000
+
+# frontend
+cd ..
+cd event-frontend
+npm install
+npm run dev
+
+# ouverture auto 
+Start-Process http://localhost:5173/
+
 
 
 TODO : 

@@ -34,6 +34,7 @@ psql -U postgres -d dbname -f eventweb.sql
 # Installer et lancer le backend
 cd ../../..
 cd event-backend
+npm install dotenv
 npm install
 node src/server.js 
 

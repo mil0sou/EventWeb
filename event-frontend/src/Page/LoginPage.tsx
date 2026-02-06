@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../API/auth-actions";
 import "./style/LoginPage.scss";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
@@ -19,7 +20,7 @@ async function handleSubmit(e: React.FormEvent) {
     localStorage.setItem("token", token);
     localStorage.setItem("username", username);
     window.dispatchEvent(new Event("auth-changed"));
-
+    toast.success("Connexion réussie", {  className: "toastSuccess", duration: 2000 });
     navigate("/events", { replace: true });
   } catch (err) {
     setError(

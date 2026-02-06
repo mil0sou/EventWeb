@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import type { User } from "./utils/types.ts";
 import AppRoutes from "./AppRoutes";
 import { validateToken } from "./API/auth-actions";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -23,8 +24,8 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <AppRoutes 
-        user={user} setUser={setUser} />
+      <Toaster position="top-right"/>
+      <AppRoutes user={user} setUser={setUser} />
     </BrowserRouter>
   );
 }

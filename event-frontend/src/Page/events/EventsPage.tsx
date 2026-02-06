@@ -12,6 +12,7 @@ import {
 } from "../../API/events-actions.ts";
 import type { EventItem } from "../../utils/types";
 import "../style/EventsPage.scss";
+import toast from "react-hot-toast";
 
 // composants
 import EventsList from "./EventsList";
@@ -91,6 +92,7 @@ export default function EventsPage() {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     window.dispatchEvent(new Event("auth-changed"));
+    toast.success("Déconnecté", {  className: "toastSuccess", duration: 2000 });
     navigate("/login");
   }
 
@@ -122,8 +124,8 @@ export default function EventsPage() {
         description: cleanDesc,
         event_date: eventDate,
         capacity,
-      });
-
+      }); 
+      toast.success("Événement créé", {  className: "toastSuccess", duration: 2000 });
       await refreshEvents();
 
       // reset + fermer
@@ -240,6 +242,7 @@ async function openEventDetails(ev: EventItem) {
     } catch (err) {
       setDetailsError(err instanceof Error ? err.message : "Erreur");
     } finally {
+      toast.success("Event supprimé", {  className: "toastSuccess", duration: 2000 });
       setDetailsLoading(false);
     }
   }

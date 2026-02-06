@@ -4,6 +4,7 @@ import { register } from "../API/auth-actions";
 import { login } from "../API/auth-actions";
 import { Link } from "react-router-dom";
 import "./style/RegisterPage.scss";
+import toast from "react-hot-toast";
 
 
 export default function RegisterPage() {
@@ -24,6 +25,7 @@ async function handleSubmit(e: React.FormEvent) {
     localStorage.setItem("token", token);
     localStorage.setItem("username", username); 
     window.dispatchEvent(new Event("auth-changed"));
+    toast.success("Compte créé", {  className: "toastSuccess", duration: 2000 });
     navigate("/events");
   } catch (err) {
     const e2 = err as Error & { status?: number };

@@ -40,6 +40,7 @@ node src/server.js
 
 # FRONTEND (nouveau terminal, depuis la racine EventWeb)
 cd event-frontend
+npm i react-hot-toast
 npm install
 npm run dev
 ```
@@ -49,12 +50,12 @@ L'application est dispo en navigateur à l'adresse : **http://localhost:5173**
 
 
 TODO : 
- - toasts notif 
+
  - recherche d'event + filtre
 
  - 2e onglet evenemtent passé + futur + mes évenements
  - profil : mes events inscrits + créés 
-
+ - FAIT toasts notif 
  - FAIT voulez vous vrm supprimer ?  
  - FAIT Bloquer le bouton s'inscrire quand plein 
  - FAIT faire marcher la migration avec des mdp de postgres différents avec un .env

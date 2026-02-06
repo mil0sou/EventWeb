@@ -31,6 +31,7 @@ export default function EventsPage() {
   // list state
   const [events, setEvents] = useState<EventItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [query, setQuery] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   // create form state
@@ -279,6 +280,20 @@ async function openEventDetails(ev: EventItem) {
     }
   }
 
+
+
+
+  const normalizedQuery = query.trim().toLowerCase();
+
+  const filteredEvents = events.filter((ev) => {
+    if (!normalizedQuery) return true;
+
+    const haystack = `${ev.title} ${ev.description}`.toLowerCase();
+    return haystack.includes(normalizedQuery);
+  });
+
+
+
   return (
     <div className="eventsWrap">
       <div className="eventsTop">
@@ -302,7 +317,7 @@ async function openEventDetails(ev: EventItem) {
       <div className="divider" />
 
       <EventsList
-        events={events}
+        events={filteredEvents}
         username={username}
         loading={loading}
         error={error}

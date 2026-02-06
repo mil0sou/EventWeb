@@ -311,3 +311,18 @@ body {
   color: #e7eefc !important;
 }
 
+.eventsSearch {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+  color: inherit;
+  outline: none;
+  min-width: 260px;
+  margin-bottom: 12px; 
+
+}
+
+.eventsSearch::placeholder {
+  opacity: 0.7;
+}

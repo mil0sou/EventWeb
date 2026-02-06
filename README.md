@@ -53,8 +53,6 @@ TODO :
 
  - recherche d'event + filtre
 
- - 2e onglet evenemtent passé + futur + mes évenements
- - profil : mes events inscrits + créés 
  - FAIT toasts notif 
  - FAIT voulez vous vrm supprimer ?  
  - FAIT Bloquer le bouton s'inscrire quand plein 

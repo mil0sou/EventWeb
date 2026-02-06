@@ -51,8 +51,8 @@ L'application est dispo en navigateur à l'adresse : **http://localhost:5173**
 
 TODO : 
 
- - recherche d'event + filtre
 
+ - FAIT recherche d'event + filtre
  - FAIT toasts notif 
  - FAIT voulez vous vrm supprimer ?  
  - FAIT Bloquer le bouton s'inscrire quand plein 

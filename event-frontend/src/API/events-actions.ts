@@ -1,9 +1,11 @@
 import type { EventItem } from "../utils/types";
 
+import { API_URL } from "./api";
+
 export async function getEvents(): Promise<EventItem[]> {
   const token = localStorage.getItem("token");
 
-  const res = await fetch("http://localhost:5000/api/events", {
+  const res = await fetch("${API_URL}/api/events", {
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
 
@@ -22,7 +24,7 @@ export async function createEvent(payload: {
 }) {
   const token = localStorage.getItem("token");
 
-  const res = await fetch("http://localhost:5000/api/events", {
+  const res = await fetch("${API_URL}/api/events", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -42,7 +44,7 @@ export async function createEvent(payload: {
 export async function getEventDetails(id: number): Promise<EventItem> {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`http://localhost:5000/api/events/${id}`, {
+  const res = await fetch(`${API_URL}/api/events/${id}`, {
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
 
@@ -57,7 +59,7 @@ export async function getEventDetails(id: number): Promise<EventItem> {
 export async function registerEvent(id: number) {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`http://localhost:5000/api/events/${id}/register`, {
+  const res = await fetch(`${API_URL}/api/events/${id}/register`, {
     method: "POST",
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
@@ -71,7 +73,7 @@ export async function registerEvent(id: number) {
 export async function unregisterEvent(id: number) {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`http://localhost:5000/api/events/${id}/register`, {
+  const res = await fetch(`${API_URL}/api/events/${id}/register`, {
     method: "DELETE",
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
@@ -85,7 +87,7 @@ export async function unregisterEvent(id: number) {
 export async function deleteEventById(id: number) {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`http://localhost:5000/api/events/${id}`, {
+  const res = await fetch(`${API_URL}/api/events/${id}`, {
     method: "DELETE",
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
@@ -107,7 +109,7 @@ export async function updateEventById(
 ) {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`http://localhost:5000/api/events/${id}`, {
+  const res = await fetch(`${API_URL}/api/events/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -125,7 +127,7 @@ export async function updateEventById(
 export async function getParticipants(eventId: number): Promise<{ id: number; username: string }[]> {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`http://localhost:5000/api/events/${eventId}/participants`, {
+  const res = await fetch(`${API_URL}/api/events/${eventId}/participants`, {
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
 

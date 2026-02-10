@@ -1,7 +1,10 @@
 import type {LoginResponse, User} from "../utils/types.ts"
+import { API_URL } from "./api";
+
+
 
 export async function login(username:string,password:string):Promise<string>{
-    const res = await fetch("http://localhost:5000/api/login",{
+    const res = await fetch("${API_URL}/api/login",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({username,password}),
@@ -19,7 +22,7 @@ export async function login(username:string,password:string):Promise<string>{
 
 
 export async function register(username: string, password: string) {
-  const res = await fetch("http://localhost:5000/api/register", {
+  const res = await fetch("${API_URL}/api/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
@@ -44,7 +47,7 @@ export async function validateToken():Promise<User>{
     if(!token){
         throw new Error("no token");
     }
-    const res = await fetch("http://localhost:5000/api/me",{
+    const res = await fetch("${API_URL}/api/me",{
       method:'GET',  
       headers:{
             Authorization:`Bearer ${token}`,

@@ -5,7 +5,7 @@ import { API_URL } from "./api";
 export async function getEvents(): Promise<EventItem[]> {
   const token = localStorage.getItem("token");
 
-  const res = await fetch("${API_URL}/api/events", {
+  const res = await fetch(`${API_URL}/api/events`, {
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
 
@@ -24,7 +24,7 @@ export async function createEvent(payload: {
 }) {
   const token = localStorage.getItem("token");
 
-  const res = await fetch("${API_URL}/api/events", {
+  const res = await fetch(`${API_URL}/api/events`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

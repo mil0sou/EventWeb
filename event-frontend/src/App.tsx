@@ -6,7 +6,7 @@ import { validateToken } from "./API/auth-actions";
 import { Toaster } from "react-hot-toast";
 
 export default function App() {
-  const [user, setUser] = useState<User | null>(null);
+  const [setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");

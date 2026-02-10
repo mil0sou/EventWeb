@@ -1,34 +1,12 @@
-import { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
-import type { User } from "./utils/types.ts";
 import AppRoutes from "./AppRoutes";
-import { validateToken } from "./API/auth-actions";
 import { Toaster } from "react-hot-toast";
 
 export default function App() {
-  const [setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
-    validateToken()
-      .then((u) => {
-        setUser(u);
-      })
-      .catch(() => {
-        localStorage.removeItem("token");
-        setUser(null);
-      });
-  }, []);
-
   return (
     <BrowserRouter>
-      <Toaster position="top-right"/>
-      <AppRoutes/>
+      <Toaster position="top-right" />
+      <AppRoutes />
     </BrowserRouter>
   );
 }
-
-
-

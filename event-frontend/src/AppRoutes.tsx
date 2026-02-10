@@ -76,7 +76,7 @@ export default function AppRoutes() {
         path="/events"
         element={
           <ProtectedRoute isAuth={isAuth}>
-            <EventsPage user={{ id: "1", username: "test" }} />
+            <EventsPage />
           </ProtectedRoute>
         }
       />

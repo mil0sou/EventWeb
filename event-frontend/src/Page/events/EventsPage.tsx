@@ -31,7 +31,7 @@ export default function EventsPage() {
   // list state
   const [events, setEvents] = useState<EventItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [query, setQuery] = useState("");
+  const [query] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   // create form state
@@ -62,10 +62,6 @@ export default function EventsPage() {
   const [participantsLoading, setParticipantsLoading] = useState(false);
 
 
-  const registeredCount =
-    selectedEvent && remaining !== null
-      ? selectedEvent.capacity - remaining
-      : 0;
 
 
 

@@ -25,7 +25,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Toaster position="top-right"/>
-      <AppRoutes user={user} setUser={setUser} />
+      <AppRoutes/>
     </BrowserRouter>
   );
 }
